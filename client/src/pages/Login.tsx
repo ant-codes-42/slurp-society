@@ -31,37 +31,28 @@ const Login = () => {
   };
 
   return (
-    <div className='form-container'>
-      <form className='form login-form' onSubmit={handleSubmit}>
+    <div className='container'>
+      <form className='form' onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <div className='form-group'>
-          <label>Username</label>
-          <input
-            className='form-input'
-            type='text'
-            name='username'
-            value={loginData.username || ''}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='form-group'>
-          <label>Password</label>
-          <input
-            className='form-input'
-            type='password'
-            name='password'
-            value={loginData.password || ''}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='form-group'>
-          <button className='btn btn-primary' type='submit'>
-            Login
-          </button>
-        </div>
+        <label >Username</label>
+        <input 
+          type='text'
+          name='username'
+          value={loginData.username || ''}
+          onChange={handleChange}
+        />
+      <label>Password</label>
+        <input 
+          type='password'
+          name='password'
+          value={loginData.password || ''}
+          onChange={handleChange}
+        />
+        <button type='submit'>Submit Form</button>
       </form>
     </div>
-  );
+    
+  )
 };
 
 export default Login;
