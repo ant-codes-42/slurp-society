@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <nav className='nav'>
       <div className='nav-title'>
-        <Link to='/'> My Restaurant</Link>
+        <Link to='/'> Home Page</Link>
       </div>
       <ul className='nav-links'>
         <li className='nav-item'>
