@@ -15,9 +15,9 @@ InferCreationAttributes<Reservation>
     declare userId: string;
     declare seatingId: string;
     declare timeslotId: string;
-    declare reservationDate: Date;
-    declare startTime: Date;
-    declare endTime: Date;
+    declare reservationDate: string;
+    declare startTime: string;
+    declare endTime: string;
     declare partySize: number;
     declare status: CreationOptional<'pending' | 'confirmed' | 'cancelled' | 'completed'>;
     declare specialRequests: CreationOptional<string>;

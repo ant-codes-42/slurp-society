@@ -1,7 +1,7 @@
 import sequelize from '../config/connections.js';
 import { ReservationFactory } from './Reservation.js';
-import { TimeSlotFactory } from './TimeSlot';
-import { SeatingFactory } from './Seating';
+import { TimeSlotFactory } from './TimeSlot.js';
+import { SeatingFactory } from './Seating.js';
 import { UserFactory } from './User.js';
 
 // Init models
