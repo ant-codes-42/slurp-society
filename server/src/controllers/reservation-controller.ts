@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Op, Sequelize } from 'sequelize';
+import { Op, Sequelize, Transaction } from 'sequelize';
 import { sequelize } from '../models/index.js';
 import { Reservation } from '../models/Reservation.js';
 import { TimeSlot } from '../models/TimeSlot.js';
@@ -19,7 +19,7 @@ export const getAllReservations = async (_req: Request, res: Response) => {
 }
 
 // Check availability for a reservation, specific date, time, and party size
-export const checkResAvailability = async (req: Request, res: Response) => {
+export const checkResAvailability = async (req: Request, res: Response): Promise<Response> => {
     try {
         const { date, time, partySize } = req.query; // query parameters in format ?date=...&time=...&partySize=...
 
@@ -33,6 +33,7 @@ export const checkResAvailability = async (req: Request, res: Response) => {
             });
         }
 
+        // Required so types match in model queries
         // Validate date format (YYYY-MM-DD)
         const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
         if (!dateRegex.test(date)) {
@@ -51,7 +52,7 @@ export const checkResAvailability = async (req: Request, res: Response) => {
 
         const timeSlot = await TimeSlot.findOne({
             // NOTE: CHANGED ALL THE DATE TYPES TO STRING (DATEONLY, TIME) IN THE MODELS DECLARE, maybe change back
-            where: { // can't get the fucking date types to work, string is coming in from the query
+            where: { 
                 date: date,
                 startTime: time,
                 isAvailable: true,
@@ -112,8 +113,8 @@ export const checkResAvailability = async (req: Request, res: Response) => {
 
 // POST /api/reservations
 // Create a new reservation
-export const createReservation = async (req: Request, res: Response) => {
-    const transaction = await sequelize.transaction();
+export const createReservation = async (req: Request, res: Response): Promise<Response> => {
+    const transaction: Transaction = await sequelize.transaction();
 
     try {
         const {
@@ -126,9 +127,32 @@ export const createReservation = async (req: Request, res: Response) => {
         } = req.body;
 
         // Validate the required fields only
-        if (!userId || !reservationDate || !startTime || !endTime || !partySize) {
+        if (!userId || !reservationDate || !startTime || !endTime || !partySize ||
+            typeof userId !== 'string' ||
+            typeof reservationDate !== 'string' ||
+            typeof startTime !== 'string' ||
+            typeof endTime !== 'string' ||
+            typeof partySize !== 'string'
+        ) {
             return res.status(400).json({
                 error: 'Missing required fields'
+            });
+        }
+
+        // Required so types match in model queries
+        // Validate date format (YYYY-MM-DD)
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(reservationDate)) {
+            return res.status(400).json({
+                error: 'Invalid date format. Use YYYY-MM-DD'
+            });
+        }
+
+        // Validate time format (HH:mm:ss or HH:mm)
+        const timeRegex = /^([0-1][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/;
+        if (!timeRegex.test(startTime) || !timeRegex.test(endTime)) {
+            return res.status(400).json({
+                error: 'Invalid time format. Use HH:mm:ss or HH:mm'
             });
         }
 
@@ -138,8 +162,8 @@ export const createReservation = async (req: Request, res: Response) => {
                 date: reservationDate,
                 startTime,
                 isAvailable: true,
-                maxCapacity: {
-                    [Op.gte]: Sequelize.literal(`${Number(partySize)} + currentBookings`)
+                maxCapacity: { // Here we are checking if party size + currentBookings is less than or equal to maxCapacity
+                    [Op.gte]: Sequelize.literal(`${Number(partySize)} + currentBookings`) // Op.gte: greater than or equal
                 }
             },
             transaction
@@ -188,14 +212,14 @@ export const createReservation = async (req: Request, res: Response) => {
             reservationDate,
             startTime,
             endTime,
-            partySize,
+            partySize: Number(partySize),
             status: 'confirmed',
             specialRequests
         }, { transaction });
 
         // Update time slot capacity
         await timeSlot.increment('currentBookings', {
-            by: partySize,
+            by: Number(partySize),
             transaction
         });
 
