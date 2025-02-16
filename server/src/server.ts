@@ -2,7 +2,7 @@ const forceDatabaseRefresh = false; // enforces no refresh when database restart
 
 //imports
 import express from 'express'; // allows server creation
-import sequelize from './config/connections.js'; // imports instance of database
+import { sequelize } from './models/index.js'; // imports instance of database
 import routes from './routes/index.js'; // imports routes to handles HTTP requests
 
 const app = express(); // creates instance of express app

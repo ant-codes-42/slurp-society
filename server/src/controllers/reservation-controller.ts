@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Op, Sequelize } from 'sequelize';
-import sequelize from '../config/connections.js';
+import { sequelize } from '../models/index.js';
 import { Reservation } from '../models/Reservation.js';
 import { TimeSlot } from '../models/TimeSlot.js';
 import { Seating } from '../models/Seating.js';
@@ -24,9 +24,28 @@ export const checkResAvailability = async (req: Request, res: Response) => {
         const { date, time, partySize } = req.query; // query parameters in format ?date=...&time=...&partySize=...
 
         // data validation, return 400 Bad Request if any of the required parameters are missing
-        if (!date || !time || !partySize) {
+        if (!date || !time || !partySize ||
+            typeof date !== 'string' ||
+            typeof time !== 'string' ||
+            typeof partySize !== 'string') {
             return res.status(400).json({
                 error: 'Date, time, and party size are required'
+            });
+        }
+
+        // Validate date format (YYYY-MM-DD)
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(date)) {
+            return res.status(400).json({
+                error: 'Invalid date format. Use YYYY-MM-DD'
+            });
+        }
+
+        // Validate time format (HH:mm:ss or HH:mm)
+        const timeRegex = /^([0-1][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/;
+        if (!timeRegex.test(time)) {
+            return res.status(400).json({
+                error: 'Invalid time format. Use HH:mm:ss or HH:mm'
             });
         }
 
@@ -67,16 +86,16 @@ export const checkResAvailability = async (req: Request, res: Response) => {
         }) as SeatingWithReservations[];
 
         const hasAvailableSeating = availableSeating.some(seating => {
-        // If there are no reservations array or it's empty, the seating is available
-        if (!seating.reservations || seating.reservations.length === 0) {
-            return true;
-        }
-        
-        // Check if all existing reservations are either cancelled or completed
-        return seating.reservations.every(reservation => 
-            reservation.status === 'cancelled' || 
-            reservation.status === 'completed'
-        );
+            // If there are no reservations array or it's empty, the seating is available
+            if (!seating.reservations || seating.reservations.length === 0) {
+                return true;
+            }
+
+            // Check if all existing reservations are either cancelled or completed
+            return seating.reservations.every(reservation =>
+                reservation.status === 'cancelled' ||
+                reservation.status === 'completed'
+            );
         });
 
         return res.status(200).json({

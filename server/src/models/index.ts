@@ -1,10 +1,28 @@
-import sequelize from '../config/connections.js';
 import { ReservationFactory } from './Reservation.js';
 import { TimeSlotFactory } from './TimeSlot.js';
 import { SeatingFactory } from './Seating.js';
 import { UserFactory } from './User.js';
+import { Sequelize } from 'sequelize';
+
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Init models
+
+const sequelize = process.env.DB_URL
+    ? new Sequelize(process.env.DB_URL)
+    : new Sequelize(
+        process.env.DB_NAME || '',
+        process.env.DB_USER || '',
+        process.env.DB_PASSWORD,
+        {
+            host: 'localhost',
+            dialect: 'postgres',
+            dialectOptions: {
+                decimalNumbers: true,
+            },
+        }
+    );
 
 const Reservation = ReservationFactory(sequelize);
 const TimeSlot = TimeSlotFactory(sequelize);
@@ -43,4 +61,4 @@ Reservation.belongsTo(TimeSlot, {
     as: 'timeslot'
 });
 
-export { Reservation, TimeSlot, Seating, User };
+export { sequelize, Reservation, TimeSlot, Seating, User };

@@ -45,6 +45,7 @@ export function UserFactory(sequelize: Sequelize) {
         {
             sequelize,
             timestamps: false,
+            freezeTableName: true,
             underscored: true,
             modelName: 'user'
         }

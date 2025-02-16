@@ -1,4 +1,4 @@
-import sequelize from '../config/connections.js';
+import { sequelize } from '../models/index.js';
 import { ReservationFactory } from '../models/Reservation.js';
 import { TimeSlotFactory } from '../models/TimeSlot.js';
 import { SeatingFactory } from '../models/Seating.js';
