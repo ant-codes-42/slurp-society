@@ -12,9 +12,9 @@ InferAttributes<TimeSlot>,
 InferCreationAttributes<TimeSlot>
 > {
     declare id: CreationOptional<string>;
-    declare date: string;
-    declare startTime: string;
-    declare endTime: string;
+    declare date: Date;
+    declare startTime: Date;
+    declare endTime: Date;
     declare isAvailable: CreationOptional<boolean>;
     declare maxCapacity: number;
     declare currentBookings: CreationOptional<number>;
