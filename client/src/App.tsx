@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
 import Home from "./pages/Home";
-import Error from "./pages/Error";
+import Error from "./pages/ErrorPage";
 
 
 function App() {
@@ -8,11 +8,11 @@ function App() {
   return (
     <Router>
       <Routes>
-         {/* Home Page */}
-         <Route path="/" element={<Home />} />
-     
-{/* Catch-all Route for 404 Error */}
-<Route path="*" element={<Error />} />
+        {/* Home Page */}
+        <Route path="/" element={<Home />} />
+
+        {/* Catch-all Route for 404 Error */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </Router>
   );
