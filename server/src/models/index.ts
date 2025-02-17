@@ -1,6 +1,5 @@
 import { ReservationFactory } from './Reservation.js';
 import { TimeSlotFactory } from './TimeSlot.js';
-import { SeatingFactory } from './Seating.js';
 import { UserFactory } from './User.js';
 import { Sequelize } from 'sequelize';
 
@@ -26,7 +25,6 @@ const sequelize = process.env.DB_URL
 
 const Reservation = ReservationFactory(sequelize);
 const TimeSlot = TimeSlotFactory(sequelize);
-const Seating = SeatingFactory(sequelize);
 const User = UserFactory(sequelize);
 
 // Associations
@@ -41,24 +39,14 @@ Reservation.belongsTo(User, {
     as: 'user'
 });
 
-Seating.hasMany(Reservation, {
-    foreignKey: 'seatingId',
-    as: 'reservations'
-});
-
-Reservation.belongsTo(Seating, {
-    foreignKey: 'seatingId',
-    as: 'seating'
-});
-
 TimeSlot.hasMany(Reservation, {
-    foreignKey: 'timeSlotId',
+    foreignKey: 'timeslotId',
     as: 'reservations'
 });
 
 Reservation.belongsTo(TimeSlot, {
-    foreignKey: 'timeSlotId',
+    foreignKey: 'timeslotId',
     as: 'timeslot'
 });
 
-export { sequelize, Reservation, TimeSlot, Seating, User };
+export { sequelize, Reservation, TimeSlot, User }; //removed Seating
