@@ -13,11 +13,7 @@ InferCreationAttributes<Reservation>
 > {
     declare id: CreationOptional<string>;
     declare userId: string;
-    declare seatingId: string;
     declare timeslotId: string;
-    declare reservationDate: Date;
-    declare startTime: Date;
-    declare endTime: Date;
     declare partySize: number;
     declare status: CreationOptional<'pending' | 'confirmed' | 'cancelled' | 'completed'>;
     declare specialRequests: CreationOptional<string>;
@@ -35,24 +31,8 @@ export function ReservationFactory(sequelize: Sequelize) {
                 type: DataTypes.UUID,
                 allowNull: false
             },
-            seatingId: {
-                type: DataTypes.UUID,
-                allowNull: false
-            },
             timeslotId: {
                 type: DataTypes.UUID,
-                allowNull: false
-            },
-            reservationDate: {
-                type: DataTypes.DATEONLY,
-                allowNull: false
-            },
-            startTime: {
-                type: DataTypes.TIME,
-                allowNull: false
-            },
-            endTime: {
-                type: DataTypes.TIME,
                 allowNull: false
             },
             partySize: {
