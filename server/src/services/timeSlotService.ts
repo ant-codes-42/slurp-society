@@ -29,9 +29,9 @@ export class TimeSlotService {
             const endTime = new Date(currentTime.getTime() + slotDurationMs);
 
             slots.push({
-                date: format(date, 'yyyy-MM-dd'),
-                startTime: format(currentTime, 'HH:mm:ss'),
-                endTime: format(endTime, 'HH:mm:ss'),
+                date: new Date(format(date, 'yyyy-MM-dd')),
+                startTime: new Date(format(currentTime, 'HH:mm:ss')),
+                endTime: new Date(format(endTime, 'HH:mm:ss')),
                 maxCapacity,
                 currentBookings: 0,
                 isAvailable: true,

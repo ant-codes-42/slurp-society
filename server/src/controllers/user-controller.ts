@@ -27,9 +27,9 @@ export const getUserById = async (req: Request, res: Response) => {
 
 // POST /api/users
 export const createUser = async (req: Request, res: Response) => {
-    const { name, email, phone } = req.body;
+    const { name, email, phone, password } = req.body;
     try {
-        const user = await User.create({ name, email, phone });
+        const user = await User.create({ name, email, phone, password });
         res.status(201).json(user);
     } catch (error) {
         res.status(500).json({ error: (error as Error).message });
