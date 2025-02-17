@@ -5,6 +5,6 @@ const router: Router = express.Router();
 
 router.get('/', getAllReservations);
 router.get('/check', checkResAvailability);
-router.post('/create', createReservation); // currently broken, cannot figure out this type error...
+router.post('/', createReservation);
 
 export { router as reservationRouter };

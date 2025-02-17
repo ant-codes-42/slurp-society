@@ -46,7 +46,6 @@ export const checkResAvailability = async (req: Request, res: Response): Promise
         }
 
         const timeSlot = await TimeSlot.findOne({
-            // NOTE: CHANGED ALL THE DATE TYPES TO STRING (DATEONLY, TIME) IN THE MODELS DECLARE, maybe change back
             where: { 
                 date: date,
                 startTime: time,
