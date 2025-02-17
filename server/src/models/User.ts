@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+
 import {
     Model,
     type InferAttributes,
@@ -15,7 +17,15 @@ InferCreationAttributes<User>
     declare email: string;
     declare name: string;
     declare phone: string;
+    declare password: string;
+
+    //hash the password before saving the  user
+    public async setPassword(password: string) {
+        const saltRounds =10;
+        this.password = await bcrypt.hash(password, saltRounds);
+    }
 }
+
 
 export function UserFactory(sequelize: Sequelize) {
     User.init(
@@ -40,6 +50,10 @@ export function UserFactory(sequelize: Sequelize) {
             phone: {
                 type: DataTypes.STRING,
                 allowNull: false
+            },
+            password: {
+                type: DataTypes.STRING,
+                allowNull: false,
             }
         },
         {

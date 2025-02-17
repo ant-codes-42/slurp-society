@@ -6,7 +6,7 @@ import type { UserLogin } from '../interfaces/UserLogin';
 //function to login users
 const Login = () => {
   const [loginData, setLoginData] = useState<UserLogin>({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -39,11 +39,11 @@ const Login = () => {
       {/*generic container to hold ONLY the user login password & submit button */}
       <form className='form' onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <label >Username</label>
+        <label >Email</label>
         <input 
-          type='text'
-          name='username'
-          value={loginData.username || ''}
+          type='email'
+          name='email'
+          value={loginData.email || ''}
           onChange={handleChange}
         />
       <label>Password</label>

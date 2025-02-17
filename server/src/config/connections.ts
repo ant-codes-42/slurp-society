@@ -1,4 +1,4 @@
-/*import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 dotenv.config();
 
 import { Sequelize } from 'sequelize';
@@ -18,4 +18,4 @@ const sequelize = process.env.DB_URL
         }
     );
 
-    export default sequelize;*/
+    export default sequelize;
