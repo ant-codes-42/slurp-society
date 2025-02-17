@@ -1,3 +1,4 @@
+import { Op, Sequelize } from 'sequelize';
 import { TimeSlot } from '../models/index.js';
 import { addHours, format, parse } from 'date-fns';
 
@@ -51,5 +52,18 @@ export class TimeSlotService {
             await this.generateTimeSlotsForDate(currentDate, maxCapacity);
             currentDate = addHours(currentDate, 1);
         }
+    }
+
+    async getAvailableTimeSlots(date: Date, minRequiredCapacity: number): Promise<TimeSlot[]> {
+        return TimeSlot.findAll({
+            where: {
+                date: format(date, 'yyyy-MM-dd'),
+                isAvailable: true,
+                maxCapacity: {
+                    [Op.gte]: Sequelize.literal(`current_bookings + ${minRequiredCapacity}`)
+            }
+        },
+        order: [['startTime', 'ASC']]
+        });
     }
 }
