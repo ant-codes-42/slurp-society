@@ -1,5 +1,5 @@
 import { Op, Sequelize } from 'sequelize';
-import { TimeSlot } from '../models/index.js';
+import { TimeSlot } from '../models/TimeSlot.js';
 import { addHours, format, parse } from 'date-fns';
 
 interface BusinessHours {
@@ -65,5 +65,27 @@ export class TimeSlotService {
         },
         order: [['startTime', 'ASC']]
         });
+    }
+
+    async getTimeSlotAvailability(timeSlotId: string): Promise<{
+        available: boolean;
+        remainingCapacity: number;
+        timeSlot: TimeSlot | null;
+    }> {
+        const timeSlot = await TimeSlot.findByPk(timeSlotId);
+
+        if (!timeSlot) {
+            return {
+                available: false,
+                remainingCapacity: 0,
+                timeSlot: null
+            };
+        }
+
+        return {
+            available: timeSlot.isAvailable,
+            remainingCapacity: timeSlot.maxCapacity - timeSlot.currentBookings,
+            timeSlot
+        };
     }
 }
