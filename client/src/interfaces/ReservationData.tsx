@@ -1,3 +1,4 @@
+// Not sure if needed atm
 export interface ReservationData {
     userId: string;
     timeSlotId: string;
