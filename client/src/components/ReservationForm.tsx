@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUserById } from '../api/userAPI';
 import type { UserData } from '../interfaces/UserData';
+import { createReservation } from '../api/reservationAPI';
 import auth from '../utils/Auth';
 
 export default function ReservationForm({ slot, incomingPartySize }: { slot: string, incomingPartySize: string }) {
@@ -73,6 +74,17 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
         e.preventDefault();
 
         //Add API call to create reservation
+        if (!userObj.id || !slotId) {
+            console.error('User ID not found');
+            return;
+        } else if (userObj.id) {}
+        createReservation(userObj.id, slotId, partySize, specialRequests)
+            .then((response) => {
+                console.log('Reservation created:', response);
+            })
+            .catch((error) => {
+                console.error('Error creating reservation:', error);
+            });
     };
 
     return (
