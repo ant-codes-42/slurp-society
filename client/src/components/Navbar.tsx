@@ -3,10 +3,10 @@ import { Link } from 'react-router';
 import auth from '../utils/Auth';
 
 const Navbar = () => {
-  const [ loginCheck, setLoginCheck ] = useState(false);
+  const [loginCheck, setLoginCheck] = useState(false);
 
   const checkLogin = () => {
-    if(auth.loggedIn()) {
+    if (auth.loggedIn()) {
       setLoginCheck(true);
     }
   };
@@ -18,22 +18,23 @@ const Navbar = () => {
 
   return (
     <nav className='nav'>
-      <div className='nav-title'>
-        <Link to='/'> Home Page</Link>
-      </div>
       <ul className='nav-links'>
         <li className='nav-item'>
-          <Link to='/menu'>Menu</Link>
+          <Link to='/' className='a-link'> Home Page</Link>
+        </li>
+
+        <li className='nav-item'>
+          <Link to='/menu' className='a-link'>Menu</Link>
         </li>
         <li className='nav-item'>
-          <Link to='/reservation'>Reservation</Link>
+          <Link to='/reservation' className='a-link'>Reservation</Link>
         </li>
         <li className='nav-item'>
-          <Link to='/contact'>Contact</Link>
+          <Link to='/contact' className='a-link'>Contact</Link>
         </li>
         <li className='nav-item'>
           {!loginCheck ? (
-            <Link to='/login'>
+            <Link to='/login' className='a-link'>
               <button type='button'>Login</button>
             </Link>
           ) : (
