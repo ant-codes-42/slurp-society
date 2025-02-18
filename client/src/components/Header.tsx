@@ -1,11 +1,13 @@
+import '../styles/Header.css'
+
 function Header() {
     return (
-       <div>
-       <header>
+       <div className="headerDiv">
+       <header className="header">
 
-            <img src='./src/assets/images/ramen-image.jpg' alt='ramen' />
-            <h1>Slurp Society</h1>
-            <img src='./src/assets/images/ramen-image.jpg' alt='ramen' />
+            <img className="headerImg" src='./src/assets/images/ramen-image.jpg' alt='ramen' />
+            <h1 className="h1">Slurp Society</h1>
+            <img className="headerImg" src='./src/assets/images/ramen-image.jpg' alt='ramen' />
 
         </header>
         </div>

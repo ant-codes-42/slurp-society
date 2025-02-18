@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin } from 'lucide-react';
+
 import '../app.css';
 
 const Contact = () => {
@@ -25,9 +25,9 @@ const Contact = () => {
         
                             <div className="contact-info">
                                 <h3 className="contact-subtitle">Contact Us</h3>
-                                <p><Mail /> hello@slurpsociety.com</p>
+                                {/* <p><Mail /> hello@slurpsociety.com</p>
                                 <p><Phone /> (555) 123-4567</p>
-                                <p><MapPin /> 123 Noodle Lane, Ramen City, USA</p>
+                                <p><MapPin /> 123 Noodle Lane, Ramen City, USA</p> */}
                             </div>
                         </div>
                     </div>
