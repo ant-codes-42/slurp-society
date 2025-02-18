@@ -15,8 +15,8 @@ InferCreationAttributes<User>
 > {
     declare id: CreationOptional<string>;
     declare email: string;
-    declare name: string;
-    declare phone: string;
+    declare name: CreationOptional<string>;
+    declare phone: CreationOptional<string>;
     declare password: string;
 
     //hash the password before saving the  user
