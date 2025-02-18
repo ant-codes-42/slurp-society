@@ -47,6 +47,11 @@ const Register = () => {
             setLoading(true);
             //calls register API endpoint 
             const response = await register(formData);
+            
+            if(response.error) {
+              throw new Error(response.error); //shows the error on the backend
+            }
+
             setSuccess('Registration successful! Please check your email.');
             //redirects page to login endpoint after 3 seconds 
             setTimeout(() => navigate('/login'), 3000);
