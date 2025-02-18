@@ -1,20 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom'; // FIXED: Use 'react-router-dom' instead of 'react-router'
 import auth from '../utils/Auth';
 
 const Navbar = () => {
-  const [ loginCheck, setLoginCheck ] = useState(false);
+  const [loginCheck, setLoginCheck] = useState(false);
 
-  const checkLogin = () => {
-    if(auth.loggedIn()) {
-      setLoginCheck(true);
-    }
-  };
-
+  // Check if the user is logged in
   useEffect(() => {
-    console.log(loginCheck);
-    checkLogin();
-  }, [loginCheck])
+    setLoginCheck(auth.loggedIn());
+  }, []);
 
   return (
     <nav className='nav'>
@@ -33,9 +27,14 @@ const Navbar = () => {
         </li>
         <li className='nav-item'>
           {!loginCheck ? (
-            <Link to='/login'>
-              <button type='button'>Login</button>
-            </Link>
+            <>
+              <Link to='/login'>
+                <button type='button'>Login</button>
+              </Link>
+              <Link to='/register'>
+                <button type='button'>Register</button> 
+              </Link>
+            </>
           ) : (
             <button
               type='button'
