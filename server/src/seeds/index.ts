@@ -1,7 +1,6 @@
 import { sequelize } from '../models/index.js';
 import { ReservationFactory } from '../models/Reservation.js';
 import { TimeSlotFactory } from '../models/TimeSlot.js';
-import { SeatingFactory } from '../models/Seating.js';
 import { UserFactory } from '../models/User.js';
 
 // Init models
@@ -9,7 +8,6 @@ const seedAll = async (): Promise<void> => {
     try {
         ReservationFactory(sequelize);
         TimeSlotFactory(sequelize);
-        SeatingFactory(sequelize);
         UserFactory(sequelize);
         await sequelize.sync({ force: true });
         console.log('Database synced successfully');
