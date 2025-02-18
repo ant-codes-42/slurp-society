@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router'; 
+
 import auth from '../utils/Auth';
 
 const Navbar = () => {
@@ -13,7 +14,7 @@ const Navbar = () => {
   return (
     <nav className='nav'>
       <div className='nav-title'>
-        <Link to='/'> Home Page</Link>
+        <Link to='/'>Home Page</Link>
       </div>
       <ul className='nav-links'>
         <li className='nav-item'>
@@ -28,23 +29,25 @@ const Navbar = () => {
         <li className='nav-item'>
           {!loginCheck ? (
             <>
-              <Link to='/login'>
-                <button type='button'>Login</button>
-              </Link>
-              <Link to='/register'>
-                <button type='button'>Register</button> 
-              </Link>
+              <li className='nav-item'>
+                <Link to='/login'>Login</Link> 
+              </li>
+              <li className='nav-item'>
+                <Link to='/register'>Register</Link> 
+              </li>
             </>
           ) : (
-            <button
-              type='button'
-              onClick={() => {
-                auth.logout();
-                setLoginCheck(false); // Update state after logout
-              }}
-            >
-              Logout
-            </button>
+            <li className='nav-item'>
+              <Link
+                to='/'
+                onClick={() => {
+                  auth.logout();
+                  setLoginCheck(false); //  Logout & update state
+                }}
+              >
+                Logout
+              </Link>
+            </li>
           )}
         </li>
       </ul>
