@@ -8,6 +8,8 @@ import CreateReservation from "./pages/CreateReservation";
 import Error from "./pages/ErrorPage";
 import Contact from "./pages/Contact";
 import Menu from "./pages/Menu";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const rootElement = document.getElementById("root");
 
@@ -21,6 +23,8 @@ if (rootElement) {
           <Route path ="/Menu" index element ={<Menu />}/>
           <Route path="reservation" element={<Reservation />} />
           <Route path="reservation/create/:slotId" element={<CreateReservation />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />}/>
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>

@@ -1,25 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router'; 
+
 import auth from '../utils/Auth';
 
 const Navbar = () => {
-  const [ loginCheck, setLoginCheck ] = useState(false);
+  const [loginCheck, setLoginCheck] = useState(false);
 
-  const checkLogin = () => {
-    if(auth.loggedIn()) {
-      setLoginCheck(true);
-    }
-  };
-
+  // Check if the user is logged in
   useEffect(() => {
-    console.log(loginCheck);
-    checkLogin();
-  }, [loginCheck])
+    setLoginCheck(auth.loggedIn());
+  }, []);
 
   return (
     <nav className='nav'>
       <div className='nav-title'>
-        <Link to='/'> Home Page</Link>
+        <Link to='/'>Home Page</Link>
       </div>
       <ul className='nav-links'>
         <li className='nav-item'>
@@ -33,19 +28,26 @@ const Navbar = () => {
         </li>
         <li className='nav-item'>
           {!loginCheck ? (
-            <Link to='/login'>
-              <button type='button'>Login</button>
-            </Link>
+            <>
+              <li className='nav-item'>
+                <Link to='/login'>Login</Link> 
+              </li>
+              <li className='nav-item'>
+                <Link to='/register'>Register</Link> 
+              </li>
+            </>
           ) : (
-            <button
-              type='button'
-              onClick={() => {
-                auth.logout();
-                setLoginCheck(false); // Update state after logout
-              }}
-            >
-              Logout
-            </button>
+            <li className='nav-item'>
+              <Link
+                to='/'
+                onClick={() => {
+                  auth.logout();
+                  setLoginCheck(false); //  Logout & update state
+                }}
+              >
+                Logout
+              </Link>
+            </li>
           )}
         </li>
       </ul>
