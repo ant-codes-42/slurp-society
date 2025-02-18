@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 import Navbar from "./components/Navbar";
+import Contact from "./pages/Contact.jsx";
 import Header from "./components/Header";
 
 
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <Navbar />
       <Outlet />
+      <Contact />
     </div>
   );
 }
