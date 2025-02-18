@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../models/User';
+import { User } from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import {sendVerificationEmail} from '../services/emailService';
+import {sendVerificationEmail} from '../services/emailService.js';
 
 export const login = async (req: Request, res: Response): Promise<void> => {
     try {
