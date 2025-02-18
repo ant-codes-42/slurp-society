@@ -1,4 +1,4 @@
-// GET request to /api/timeslots/available?
+// GET request to /api/timeslot/available?
 // date=YYYY-MM-DD&partySize=number
 const getAvailableTimeslots = async(date: string | null, partySize: number | null) => {
     try {

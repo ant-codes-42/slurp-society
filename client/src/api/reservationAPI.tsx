@@ -14,3 +14,5 @@ const fetchReservation = async (id: string) => {
         return Promise.reject('Could not fetch reservation info');
     }
 }
+
+export { fetchReservation };
