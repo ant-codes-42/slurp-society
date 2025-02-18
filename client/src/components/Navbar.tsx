@@ -18,13 +18,17 @@ const Navbar = () => {
       </div>
       <ul className='nav-links'>
         <li className='nav-item'>
-          <Link to='/menu'>Menu</Link>
+          <Link to='/' className='a-link'> Home Page</Link>
+        </li>
+
+        <li className='nav-item'>
+          <Link to='/menu' className='a-link'>Menu</Link>
         </li>
         <li className='nav-item'>
-          <Link to='/reservation'>Reservation</Link>
+          <Link to='/reservation' className='a-link'>Reservation</Link>
         </li>
         <li className='nav-item'>
-          <Link to='/contact'>Contact</Link>
+          <Link to='/contact' className='a-link'>Contact</Link>
         </li>
         <li className='nav-item'>
           {!loginCheck ? (
