@@ -45,11 +45,11 @@ export function UserFactory(sequelize: Sequelize) {
             },
             name: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             phone: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             password: {
                 type: DataTypes.STRING,
@@ -62,6 +62,7 @@ export function UserFactory(sequelize: Sequelize) {
             freezeTableName: true,
             underscored: true,
             modelName: 'user',
+            tableName: 'users',
             hooks: {
                 beforeCreate: async (user: User) => {
                     await user.setPassword(user.password);
