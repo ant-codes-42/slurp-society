@@ -42,7 +42,12 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
         if (userObj.id) {
             getUserById(userObj.id)
                 .then((user) => {
-                    console.log('User:', user);
+                    setUserObj(prevState => ({
+                        ...prevState,
+                        email: user.email,
+                        name: user.name,
+                        phone: user.phone
+                    }));
                 })
                 .catch((error) => {
                     console.error('Error fetching user:', error);
