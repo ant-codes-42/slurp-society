@@ -6,7 +6,7 @@ import {sendVerificationEmail} from '../services/emailService';
 
 export const login = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { email, password } = req.body;
+        const { email, password, } = req.body;
 
         // Find the user by email
         const user = await User.findOne({
@@ -47,7 +47,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
 export const register = async (req: Request, res: Response): Promise <void> => {
     try {
-        const {email, password } = req.body;
+        const {email, password, phone, name } = req.body;
 
         //check if the user already exists 
         const existingUser = await User.findOne ({where: {email} });
@@ -63,6 +63,8 @@ export const register = async (req: Request, res: Response): Promise <void> => {
         //create a new user (via their email)
         const newUser = await User.create({
             email,
+            phone, 
+            name,
             password: hashedPassword,
         });
 
