@@ -15,6 +15,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
         //  If user not found, return error
         if (!user) {
+            console.log('User not found');
             res.status(401).json({ message: 'Authentication failed' });
             return;
         }
@@ -23,6 +24,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         const passwordIsValid = await bcrypt.compare(password, user.password);
 
         if (!passwordIsValid) {
+            console.log('Password is invalid');
             res.status(401).json({ message: 'Authentication failed' });
             return;
         }
@@ -58,14 +60,14 @@ export const register = async (req: Request, res: Response): Promise <void> => {
         }
 
         //hash password before storing it
-        const hashedPassword = await bcrypt.hash(password, 10);
+        //const hashedPassword = await bcrypt.hash(password, 10);
 
         //create a new user (via their email)
         const newUser = await User.create({
             email,
             phone, 
             name,
-            password: hashedPassword,
+            password
         });
 
         console.log(`New user created: ${newUser.email}`); 

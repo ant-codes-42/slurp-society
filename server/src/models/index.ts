@@ -36,7 +36,7 @@ User.hasMany(Reservation, {
 
 Reservation.belongsTo(User, {
     foreignKey: 'userId',
-    as: 'user'
+    as: 'users'
 });
 
 TimeSlot.hasMany(Reservation, {
