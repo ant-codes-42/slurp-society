@@ -5,6 +5,7 @@ import { getAvailableTimeslots } from '../api/timeslotAPI';
 import { Value } from 'react-calendar/dist/cjs/shared/types.js';
 
 const Reservation = () => {
+    //REFACTOR: Convert back to using <Date | null> object
     const [calendarDate, setCalendarDate] = useState<Value>(null);
     const [partySize, setPartySize] = useState<number>(1);
 

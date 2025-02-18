@@ -9,12 +9,14 @@ const getAvailableTimeslots = async(date: string | null, partySize: number | nul
         if (partySize < 1) {
             throw new Error('Party size must be at least 1');
         }
-
-        if (date < new Date().toISOString().split('T')[0]) {
+        // REFACTOR: Compare date as date object instead of string
+        if (new Date(date) < new Date(new Date().setHours(0, 0, 0, 0))) {
             throw new Error('Date must be in the future');
         }
 
-        const response = await fetch(`/api/timeslots/available?date=${date}&partySize=${partySize}`);
+        // REFACTOR: Convert date using dateUtils.ts formatDate function
+
+        const response = await fetch(`/api/timeslot/available?date=${date}&partySize=${partySize}`);
         const data = await response.json();
 
         if (!response.ok) {
