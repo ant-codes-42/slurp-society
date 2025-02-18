@@ -1,4 +1,4 @@
-const Menu = () => {
+ const Menu = () => {
     return (
      <>
          <div className="menuH2">
@@ -31,3 +31,4 @@ const Menu = () => {
 }
 
 export default Menu;
+

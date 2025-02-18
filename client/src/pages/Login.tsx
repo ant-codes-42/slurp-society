@@ -53,7 +53,7 @@ const Login = () => {
           value={loginData.password || ''}
           onChange={handleChange}
         />
-        <button type='submit'>Submit Form</button>
+        <button type='submit'>Submit</button>
       </form>
     </div>
     
