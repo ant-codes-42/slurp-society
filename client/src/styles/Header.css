@@ -1,0 +1,33 @@
+
+Header Div
+display: flex;
+justify-content: center;
+width: 100%;
+padding: 20px 0;
+background-image: (./src/assets/images/pasta-background.jpg);
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+
+
+header ::-webkit-progress-inner-element
+display: flex;
+align-items: center;
+justify-content: space-between;
+width: 80%;
+max-width: 1200px;
+
+h1
+display: block;
+font-size: 2em;
+margin-block-start: 0.67em;
+margin-block-end: 0.67em;
+margin-inline-start: 0px;
+margin-inline-end: 0px;
+font-weight: bold;
+unicode-bidi: isolate;
+
+img 
+width: 80px;
+height: auto;
+border-radius: 15px;
