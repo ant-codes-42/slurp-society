@@ -19,10 +19,16 @@ const PORT = process.env.PORT || 3001; // opens server on port 3001
 
 app.use(express.static(path.join(__dirname, '../../client/dist'))); // serves static files
 
+// Init time slot service with business hours
+const timeSlotService = new TimeSlotService({
+    openTime: '11:00',
+    closeTime: '22:00',
+    slotDuration: 60
+});
 
 app.use(express.json()); // parses JSON request bodies
 app.use(routes); // handles API requests
-
+app.use('/api/timeslot', createTimeSlotRouter(timeSlotService)); // handles time slot generation and availability requests
 app.get('/*', function (_req, res) {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'), function (err) {
         if (err) {
@@ -38,11 +44,5 @@ sequelize.sync({ force: forceDatabaseRefresh }).then(() => { //synqs sequelize m
     });
 });
 
-// Init time slot service with business hours
-const timeSlotService = new TimeSlotService({
-    openTime: '11:00',
-    closeTime: '22:00',
-    slotDuration: 60
-});
 
-app.use('/api/timeslot', createTimeSlotRouter(timeSlotService)); // handles time slot generation and availability requests
+
