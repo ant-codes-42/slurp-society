@@ -47,6 +47,7 @@ const Reservation = () => {
                 <Calendar
                     onChange={handleDateChange}
                     value={calendarDate}
+                    minDate={new Date()}
                 />
             </div>
             <label>Party Size:</label>
