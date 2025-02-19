@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { getUserById } from '../api/userAPI';
 import type { UserData } from '../interfaces/UserData';
 import { createReservation } from '../api/reservationAPI';
@@ -27,7 +27,7 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
         }
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         checkLogin();
     }, []);
 
