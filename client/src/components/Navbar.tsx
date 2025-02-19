@@ -42,6 +42,7 @@ const Navbar = () => {
             <li className='nav-item'>
               <Link
                 to='/'
+                className='a-link'
                 onClick={() => {
                   auth.logout();
                   setLoginCheck(false); //  Logout & update state
