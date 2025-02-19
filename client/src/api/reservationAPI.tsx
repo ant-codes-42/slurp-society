@@ -17,7 +17,7 @@ const fetchReservation = async (id: string) => {
 
 const createReservation = async (userId: string, timeSlotId: string, partySize: string, specialRequests: string) => {
     try {
-        const response = await fetch('/api/reservation', {
+        const response = await fetch('/api/reservations', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -33,7 +33,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         const secretKey = process.env.JWT_SECRET_KEY || '';
 
         const token = jwt.sign(
-            { userId: user.getDataValue('id'), email: user.getDataValue('email') },
+            { id: user.getDataValue('id'), email: user.getDataValue('email') },
             secretKey,
             { expiresIn: '1h' }
         );

@@ -23,30 +23,30 @@ const sequelize = process.env.DB_URL
         }
     );
 
-const Reservation = ReservationFactory(sequelize);
-const TimeSlot = TimeSlotFactory(sequelize);
 const User = UserFactory(sequelize);
+const TimeSlot = TimeSlotFactory(sequelize);
+const Reservation = ReservationFactory(sequelize);
 
 // Associations
 
 User.hasMany(Reservation, {
     foreignKey: 'userId',
-    as: 'reservations'
+    //as: 'reservations'
 });
 
 Reservation.belongsTo(User, {
     foreignKey: 'userId',
-    as: 'users'
+    //as: 'users_table'
 });
 
 TimeSlot.hasMany(Reservation, {
     foreignKey: 'timeslotId',
-    as: 'reservations'
+    //as: 'reservations'
 });
 
 Reservation.belongsTo(TimeSlot, {
     foreignKey: 'timeslotId',
-    as: 'timeslot'
+    //as: 'timeslot'
 });
 
 export { sequelize, Reservation, TimeSlot, User }; //removed Seating

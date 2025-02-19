@@ -49,6 +49,7 @@ const Reservation = () => {
                     value={calendarDate}
                 />
             </div>
+            <label>Party Size:</label>
             <input
                 type="number"
                 value={partySize}
