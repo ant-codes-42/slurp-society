@@ -1,4 +1,4 @@
-import {Resend } from 'resend';
+import { Resend } from 'resend';
 import dotenv from 'dotenv';
 
 dotenv.config(); // loads enviroment variables from .env
