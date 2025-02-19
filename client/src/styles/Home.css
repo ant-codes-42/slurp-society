@@ -1,7 +1,7 @@
 .home-container {
     border: black 3px solid;
     border-radius: 25px;
-    font-family: verdana;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
     margin-top: 50px;
     flex-direction: column;
