@@ -1,6 +1,6 @@
 import { Op, Sequelize } from 'sequelize';
 import { TimeSlot } from '../models/TimeSlot.js';
-import { addHours, format, parse } from 'date-fns';
+import { addDays, format } from 'date-fns';
 
 interface BusinessHours {
     openTime: string;
@@ -17,30 +17,47 @@ export class TimeSlotService {
 
     // Generate time slots for a given date
     async generateTimeSlotsForDate(date: Date, maxCapacity: number): Promise<void> {
-        const openTime = parse(this.businessHours.openTime, 'HH:mm', date);
-        const closeTime = parse(this.businessHours.closeTime, 'HH:mm', date);
-        const slotDurationMs = this.businessHours.slotDuration * 60 * 1000; // need to set the slot duration to milliseconds for addition later
+        const dateStr = format(date, 'yyyy-MM-dd');
+
+        // Set specific timezone offset for consistent handling
+        const baseDate = new Date(dateStr + 'T00:00:00.000Z');
+
+        // Parse times with explicit timezone handling
+        const [openHour, openMinute] = this.businessHours.openTime.split(':').map(Number);
+        const [closeHour, closeMinute] = this.businessHours.closeTime.split(':').map(Number);
+
+        const openTime = new Date(baseDate);
+        openTime.setUTCHours(openHour, openMinute, 0);
+
+        const closeTime = new Date(baseDate);
+        closeTime.setUTCHours(closeHour, closeMinute, 0);
+
+        const slotDurationMs = this.businessHours.slotDuration * 60 * 1000;
 
         const slots = [];
         let currentTime = openTime;
 
-        // not sure if this needs to be currentTime + slotDurationMs < ...
         while (currentTime < closeTime) {
             const endTime = new Date(currentTime.getTime() + slotDurationMs);
 
+            console.log('Creating slot:', {
+                date: format(currentTime, 'yyyy-MM-dd'),
+                start: format(currentTime, 'HH:mm'),
+                end: format(endTime, 'HH:mm')
+            });
+
             slots.push({
-                date: new Date(format(date, 'yyyy-MM-dd')),
-                startTime: new Date(format(currentTime, 'HH:mm:ss')),
-                endTime: new Date(format(endTime, 'HH:mm:ss')),
+                date: baseDate,
+                startTime: currentTime,
+                endTime: endTime,
                 maxCapacity,
                 currentBookings: 0,
                 isAvailable: true,
             });
 
-            currentTime = endTime;
+            currentTime = new Date(currentTime.getTime() + slotDurationMs);
         }
 
-        // Bulk create with on duplicate in case we have existing slots
         await TimeSlot.bulkCreate(slots, {
             updateOnDuplicate: ['maxCapacity', 'isAvailable']
         });
@@ -50,7 +67,7 @@ export class TimeSlotService {
         let currentDate = startDate;
         while (currentDate <= endDate) {
             await this.generateTimeSlotsForDate(currentDate, maxCapacity);
-            currentDate = addHours(currentDate, 1);
+            currentDate = addDays(currentDate, 1);
         }
     }
 
@@ -61,9 +78,9 @@ export class TimeSlotService {
                 isAvailable: true,
                 maxCapacity: {
                     [Op.gte]: Sequelize.literal(`current_bookings + ${minRequiredCapacity}`)
-            }
-        },
-        order: [['startTime', 'ASC']]
+                }
+            },
+            order: [['startTime', 'ASC']]
         });
     }
 

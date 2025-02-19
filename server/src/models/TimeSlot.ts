@@ -57,7 +57,7 @@ export function TimeSlotFactory(sequelize: Sequelize) {
             sequelize,
             timestamps: false,
             underscored: true,
-            modelName: 'timeslot'
+            modelName: 'timeslots'
         }
     );
 
