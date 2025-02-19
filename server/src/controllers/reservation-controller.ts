@@ -4,6 +4,7 @@ import { sequelize } from '../models/index.js';
 import { Reservation } from '../models/Reservation.js';
 import { TimeSlot } from '../models/TimeSlot.js';
 import { User } from '../models/User.js';
+import { sendReservationConfirmation } from '../services/emailService.js';
 
 export const getAllReservations = async (_req: Request, res: Response) => {
     try {
@@ -80,6 +81,7 @@ export const checkResAvailability = async (req: Request, res: Response): Promise
 // Create a new reservation
 export const createReservation = async (req: Request, res: Response): Promise<Response> => {
     const transaction: Transaction = await sequelize.transaction();
+    let transactionCommitted = false;
 
     try {
         const {
@@ -151,10 +153,19 @@ export const createReservation = async (req: Request, res: Response): Promise<Re
         });
 
         await transaction.commit();
+        transactionCommitted = true;
+        try {
+
+            await sendReservationConfirmation(user?.email as string, user?.name as string);
+        } catch (err) {
+            console.error('Error creating reservation:', err);
+        }
 
         return res.status(201).json(reservation);
     } catch (error) {
-        await transaction.rollback();
+        if (!transactionCommitted){
+            await transaction.rollback();
+        }
         console.error('Detailed error:', error);
         console.error('SQL Query:', (error as any).sql);
         console.error('Parameters:', (error as any).parameters);

@@ -26,3 +26,25 @@ export const sendVerificationEmail = async (email: string) => {
     }
 
 }
+
+
+export const sendReservationConfirmation = async (email: string, _name: string) => {
+    try {
+        await resend.emails.send ({
+            from: 'Slurp-Society@resend.dev',
+            to: email,
+            subject: 'Reservation Confirmation - Slurp Society',
+            html: `
+            <p> Dear ${email}, </p>
+            <p> Thank you for making your reservation with Slurp Society! </p>
+            <p> We look forward to seeing you! </p>
+            <p> Regards, Slurp Society Team</p>`
+        });
+        console.log(`Confirmation Email sent to ${email}`);
+    } catch (err) {
+        console.error('Failed to send reservation confirmation email:', err);
+        throw new Error('Could not send reservation confirmation email');
+    }
+
+};
+
