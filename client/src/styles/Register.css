@@ -35,7 +35,7 @@ input:focus {
 
 
 
-.form {
+form {
     margin-top: 50px;
     display: flex;
     flex-direction: column;
