@@ -31,16 +31,17 @@ If the user wishes to make a reservation they must log in.
 ![Login](./assets/images/LoginInterface.png)
 
 The user recieves a confirmation email that they have been successfully registered.
-
+![Confirmation](./assets/images/Confirmation.png)
 
 If the user doesn't have an account they must make an account to log in.
-(insert image)
+![Login](./assets/images/MustLogIn.png)
+![RegisterExample](./assets/images/RegisterExample.png)
 
 The user can interact with the calendar on the reservations page to view all days with available reservation, and theyre corresponding time slots.
-(insert image)
+![Calendar](./assets/images/Calendar.png)
 
 The user can select a reservation.
-(insert image)
+![ReservationExample](./assets/images/ReservationExample.png)
 
 The user gets confirmation on the website that their reservation has been successful.
 (insert image)
