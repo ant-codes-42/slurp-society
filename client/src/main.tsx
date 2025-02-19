@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import Menu from "./pages/Menu";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Confirmation from "./pages/Confirmation";
 
 const rootElement = document.getElementById("root");
 
@@ -23,6 +24,7 @@ if (rootElement) {
           <Route path ="/Menu" index element ={<Menu />}/>
           <Route path="reservation" element={<Reservation />} />
           <Route path="reservation/create/:slotId" element={<CreateReservation />} />
+          <Route path="reservation/confirmation" element={<Confirmation />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />}/>
           <Route path="*" element={<Error />} />

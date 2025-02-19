@@ -29,11 +29,21 @@ export function ReservationFactory(sequelize: Sequelize) {
             },
             userId: {
                 type: DataTypes.UUID,
-                allowNull: false
+                allowNull: false,
+                references: {
+                    model: 'users',
+                    key: 'id'
+                },
+                field: 'user_id'
             },
             timeslotId: {
                 type: DataTypes.UUID,
-                allowNull: false
+                allowNull: false,
+                references: {
+                    model: 'timeslots',
+                    key: 'id'
+                },
+                field: 'timeslot_id'
             },
             partySize: {
                 type: DataTypes.INTEGER,

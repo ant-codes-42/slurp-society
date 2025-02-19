@@ -49,9 +49,11 @@ const Reservation = () => {
                     value={calendarDate}
                 />
             </div>
+            <label>Party Size:</label>
             <input
                 type="number"
                 value={partySize}
+                min={2}
                 onChange={(e) => setPartySize(Number(e.target.value))}
             />
             <div className='timeslots'>

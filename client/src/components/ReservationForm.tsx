@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { getUserById } from '../api/userAPI';
 import type { UserData } from '../interfaces/UserData';
 import { createReservation } from '../api/reservationAPI';
+import { updateUser } from '../api/userAPI';
+import { useNavigate } from 'react-router';
 import auth from '../utils/Auth';
 
 export default function ReservationForm({ slot, incomingPartySize }: { slot: string, incomingPartySize: string }) {
@@ -10,12 +12,12 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
         email: null,
         name: null,
         phone: null,
-        password: null,
     });
     const [specialRequests, setSpecialRequests] = useState('');
-    const [partySize, setPartySize] = useState(incomingPartySize);
+    const partySize = incomingPartySize;
     const slotId = slot;
     console.log(slotId); //temp logging
+    const navigate = useNavigate();
 
     const [loginCheck, setLoginCheck] = useState(false);
 
@@ -34,7 +36,8 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
             //Add decode token and API call to get user data
             setUserObj(prevState => ({
                 ...prevState,
-                id: auth.getProfile().id
+                id: auth.getProfile().id,
+                email: auth.getProfile().email
             }));
         }
     }, [loginCheck]);
@@ -56,15 +59,28 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
         }
     }, [userObj.id])
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { target } = e;
         const inputType = target.name;
         const inputValue = target.value;
 
         if (inputType === 'specialRequests') {
             setSpecialRequests(inputValue);
-        } else if (inputType === 'partySize') {
-            setPartySize(inputValue);
+        } else if (inputType === 'name') {
+            setUserObj(prevState => ({
+                ...prevState,
+                name: inputValue
+            }));
+        } else if (inputType === 'email') {
+            setUserObj(prevState => ({
+                ...prevState,
+                email: inputValue
+            }));
+        } else if (inputType === 'phone') {
+            setUserObj(prevState => ({
+                ...prevState,
+                phone: inputValue
+            }));
         }
     };
 
@@ -73,6 +89,18 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (!userObj.email) {
+            alert('Please enter an email address');
+            return;
+        };
+
+        updateUser(userObj)
+            .then((response) => {
+                console.log('User updated:', response);
+            })
+            .catch((error) => {
+                console.error('Error updating user:', error);
+            });
         //Add API call to create reservation
         if (!userObj.id || !slotId) {
             console.error('User ID not found');
@@ -81,6 +109,7 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
         createReservation(userObj.id, slotId, partySize, specialRequests)
             .then((response) => {
                 console.log('Reservation created:', response);
+                navigate('/reservation/confirmation');
             })
             .catch((error) => {
                 console.error('Error creating reservation:', error);
@@ -99,14 +128,15 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
                     <form onSubmit={handleFormSubmit}>
                         <div>
                             <label htmlFor="name">Name</label>
-                            <input type="text" value={userObj.name ? userObj.name : ''} id="name" name="name" />
+                            <input type="text" value={userObj.name ? userObj.name : ''} onChange={handleInputChange} id="name" name="name" />
                             <label htmlFor="email">Email</label>
-                            <input type="email" value={userObj.email ? userObj.email : ''} id="email" name="email" />
+                            <input type="email" value={userObj.email ? userObj.email : ''} onChange={handleInputChange} id="email" name="email" />
                             <label htmlFor="phone">Phone</label>
-                            <input type="phone" value={userObj.phone ? userObj.phone : ''} id="phone" name="phone" />
+                            <input type="phone" value={userObj.phone ? userObj.phone : ''} onChange={handleInputChange} id="phone" name="phone" />
+                            <label htmlFor="specialRequests">Special Requests</label>
+                            <textarea value={specialRequests} onChange={handleInputChange} id="specialRequests" name="specialRequests" />
                             <label htmlFor="partySize">Party Size</label>
-                            <input type="specialRequests" value={specialRequests} onChange={handleInputChange} id="specialRequests" name="specialRequests" />
-                            <input type="number" value={partySize} onChange={handleInputChange} id="partySize" name="partySize" defaultValue={incomingPartySize} min={1} />
+                            <input type="number" value={incomingPartySize} onChange={handleInputChange} id="partySize" name="partySize" />
                         </div>
                         <div>
                             <input type="submit" value="Submit" />

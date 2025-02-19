@@ -1,5 +1,3 @@
-import '../app.css';
-
 const Menu = () => {
     return (
         <>  {/* Opening React fragment */}

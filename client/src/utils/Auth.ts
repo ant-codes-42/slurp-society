@@ -35,7 +35,7 @@ class AuthService {
   //saves token and redirects the page 
   login(idToken: string) {
     localStorage.setItem('id_token', idToken);
-    window.location.assign('/reservations'); //updated this from ('/') to ('/reservations') so after logging in a user can see the reservations page 
+    window.location.assign('/reservation'); //updated this from ('/') to ('/reservations') so after logging in a user can see the reservations page 
   }
   //removes token and redirects to homepage 
   logout() {
