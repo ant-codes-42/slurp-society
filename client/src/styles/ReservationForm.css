@@ -65,4 +65,5 @@ input:focus {
 .reserveDiv2 {
     border: black 3px solid;
     border-radius: 25px;
+    background-color: navajowhite;
 }
