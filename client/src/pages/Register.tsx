@@ -70,7 +70,7 @@ const Register = () => {
             {error && <p className="error">{error}</p>}
             {success && <p className="success">{success}</p>}
     
-            <label>Email</label>
+            <label className='label'>Email</label>
             <input
               type="email"
               name="email"
@@ -79,7 +79,7 @@ const Register = () => {
               required
             />
     
-            <label>Password</label>
+            <label className='label'>Password</label>
             <input
               type="password"
               name="password"
@@ -88,7 +88,7 @@ const Register = () => {
               required
             />
     
-            <button type="submit" disabled={loading}>
+            <button className='button' type="submit" disabled={loading}>
               {loading ? 'Registering...' : 'Sign Up'}
             </button>
           </form>
