@@ -2,6 +2,7 @@ import { useState, type FormEvent, type ChangeEvent } from 'react';
 import Auth from '../utils/Auth';
 import { login } from '../api/authAPI';
 import type { UserLogin } from '../interfaces/UserLogin';
+import "../styles/Login.css";
 
 //function to login users
 const Login = () => {
@@ -42,21 +43,24 @@ const Login = () => {
       {/*generic container to hold ONLY the user login password & submit button */}
       <form className='form' onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <label >Email</label>
+       
+       <div className='loginDiv'>
+        <label className='label'>Email</label>
         <input 
           type='email'
           name='email'
           value={loginData.email || ''}
           onChange={handleChange}
         />
-      <label>Password</label>
-        <input 
+      <label className='label'>Password</label>
+        <input className='input'
           type='password'
           name='password'
           value={loginData.password || ''}
           onChange={handleChange}
         />
-        <button type='submit'>Submit</button>
+        </div>
+        <button type='submit' className='button'>Submit</button>
         {error && <p className="error-message">{error}</p>}
       </form>
     </div>
