@@ -3,6 +3,7 @@ import { getUserById } from '../api/userAPI';
 import type { UserData } from '../interfaces/UserData';
 import { createReservation } from '../api/reservationAPI';
 import { updateUser } from '../api/userAPI';
+import { useNavigate } from 'react-router';
 import auth from '../utils/Auth';
 
 export default function ReservationForm({ slot, incomingPartySize }: { slot: string, incomingPartySize: string }) {
@@ -16,6 +17,7 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
     const partySize = incomingPartySize;
     const slotId = slot;
     console.log(slotId); //temp logging
+    const navigate = useNavigate();
 
     const [loginCheck, setLoginCheck] = useState(false);
 
@@ -107,6 +109,7 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
         createReservation(userObj.id, slotId, partySize, specialRequests)
             .then((response) => {
                 console.log('Reservation created:', response);
+                navigate('/reservation/confirmation');
             })
             .catch((error) => {
                 console.error('Error creating reservation:', error);
