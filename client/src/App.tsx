@@ -1,20 +1,19 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Error from "./pages/Error";
+import { Outlet } from "react-router";
+import Navbar from "./components/Navbar";
+import Contact from "./pages/Contact.jsx";
+import Header from "./components/Header";
 
+import './App.css';
 
 function App() {
 
   return (
-    <Router>
-      <Routes>
-         {/* Home Page */}
-         <Route path="/" element={<Home />} />
-     
-{/* Catch-all Route for 404 Error */}
-<Route path="*" element={<Error />} />
-      </Routes>
-    </Router>
+    <div>
+      <Header />
+      <Navbar />
+      <Outlet />
+      <Contact />
+    </div>
   );
 }
 

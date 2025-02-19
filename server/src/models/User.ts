@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+
 import {
     Model,
     type InferAttributes,
@@ -13,9 +15,17 @@ InferCreationAttributes<User>
 > {
     declare id: CreationOptional<string>;
     declare email: string;
-    declare name: string;
-    declare phone: string;
+    declare name: CreationOptional<string>;
+    declare phone: CreationOptional<string>;
+    declare password: string;
+
+    //hash the password before saving the  user
+    public async setPassword(password: string) {
+        const saltRounds =10;
+        this.password = await bcrypt.hash(password, saltRounds);
+    }
 }
+
 
 export function UserFactory(sequelize: Sequelize) {
     User.init(
@@ -35,18 +45,32 @@ export function UserFactory(sequelize: Sequelize) {
             },
             name: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             phone: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
+            },
+            password: {
+                type: DataTypes.STRING,
+                allowNull: false,
             }
         },
         {
             sequelize,
             timestamps: false,
+            freezeTableName: true,
             underscored: true,
-            modelName: 'user'
+            modelName: 'User',
+            tableName: 'users',
+            hooks: {
+                beforeCreate: async (user: User) => {
+                    await user.setPassword(user.password);
+                },
+                beforeUpdate: async (user: User) => {
+                    await user.setPassword(user.password);
+                }
+            }
         }
     );
 

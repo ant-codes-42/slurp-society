@@ -1,45 +1,61 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import auth from '../utils/auth';
+import { Link } from 'react-router'; 
+import  '../styles/Navbar.css'
+import auth from '../utils/Auth';
 
 const Navbar = () => {
-  const [ loginCheck, setLoginCheck ] = useState(false);
+  const [loginCheck, setLoginCheck] = useState(false);
 
-  const checkLogin = () => {
-    if(auth.loggedIn()) {
-      setLoginCheck(true);
-    }
-  };
-
+  // Check if the user is logged in
   useEffect(() => {
-    console.log(loginCheck);
-    checkLogin();
-  }, [loginCheck])
+    setLoginCheck(auth.loggedIn());
+  }, []);
 
   return (
-    <div className='nav'>
-      <div className='nav-title'>
-        <Link to='/'></Link>
-      </div>
-      <ul>
-      {
-        !loginCheck ? (
-          <li className='nav-item'>
-            <button type='button'>
-              <Link to='/login'></Link>
-            </button>
-          </li>
-        ) : (
-          <li className='nav-item'>
-            <button type='button' onClick={() => {
-              auth.logout();
-            }}>Logout</button>
-          </li>
-        )
-      }
+    <nav className='nav'>
+  
+      <div className='nav-div'>
+      <ul className='nav-links'>
+        <li className='nav-item'>
+          <Link to='/' className='a-link'> Home Page</Link>
+        </li>
+
+        <li className='nav-item'>
+          <Link to='/menu' className='a-link'>Menu</Link>
+        </li>
+        <li className='nav-item'>
+          <Link to='/reservation' className='a-link'>Reservation</Link>
+        </li>
+        <li className='nav-item'>
+          <Link to='/contact' className='a-link'>Contact</Link>
+        </li>
+          {!loginCheck ? (
+            <>
+              <li className='nav-item'>
+                <Link to='/login' className='a-link'>Login</Link> 
+              </li>
+              <li className='nav-item'>
+                <Link to='/register' className='a-link'>Register</Link> 
+              </li>
+            </>
+          ) : (
+            <li className='nav-item'>
+              <Link
+                to='/'
+                className='a-link'
+                onClick={() => {
+                  auth.logout();
+                  setLoginCheck(false); //  Logout & update state
+                }}
+              >
+                Logout
+              </Link>
+            </li>
+          )}
       </ul>
-    </div>
-  )
-}
+      </div>
+    </nav>
+  );
+};
 
 export default Navbar;
