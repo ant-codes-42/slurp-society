@@ -3,6 +3,7 @@ import { Transaction } from 'sequelize';
 import { sequelize } from '../models/index.js';
 import { Reservation } from '../models/Reservation.js';
 import { TimeSlot } from '../models/TimeSlot.js';
+import { User } from '../models/User.js';
 
 export const getAllReservations = async (_req: Request, res: Response) => {
     try {
@@ -46,7 +47,7 @@ export const checkResAvailability = async (req: Request, res: Response): Promise
         }
 
         const timeSlot = await TimeSlot.findOne({
-            where: { 
+            where: {
                 date: date,
                 startTime: time,
                 isAvailable: true,
@@ -88,6 +89,13 @@ export const createReservation = async (req: Request, res: Response): Promise<Re
             specialRequests
         } = req.body;
 
+        console.log('Attempting to create reservation:', {
+            userId, timeSlotId, partySize, specialRequests
+        });
+
+        const user = await User.findByPk(userId, { transaction });
+        console.log('Found user:', user ? 'Yes' : 'No');
+
         // Validate the required fields only
         if (!userId || !timeSlotId || !partySize ||
             typeof userId !== 'string' ||
@@ -100,7 +108,7 @@ export const createReservation = async (req: Request, res: Response): Promise<Re
         }
 
         // Check availabilty
-        const timeSlot = await TimeSlot.findByPk(timeSlotId,{
+        const timeSlot = await TimeSlot.findByPk(timeSlotId, {
             transaction,
             lock: true // Lock to avoid simultaneous updates edge case
         });
@@ -118,6 +126,14 @@ export const createReservation = async (req: Request, res: Response): Promise<Re
                 error: 'Selected time slot is at full capacity'
             });
         }
+
+        console.log('Creating reservation with data:', {
+            userId,
+            timeslotId: timeSlotId,
+            partySize: Number(partySize),
+            status: 'confirmed',
+            specialRequests
+        });
 
         //Create reservation
         const reservation = await Reservation.create({
@@ -139,7 +155,9 @@ export const createReservation = async (req: Request, res: Response): Promise<Re
         return res.status(201).json(reservation);
     } catch (error) {
         await transaction.rollback();
-        console.error('Error with createReservation:', error);
+        console.error('Detailed error:', error);
+        console.error('SQL Query:', (error as any).sql);
+        console.error('Parameters:', (error as any).parameters);
         return res.status(500).json({
             error: 'Failed to create reservation'
         });

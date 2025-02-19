@@ -61,7 +61,7 @@ export function UserFactory(sequelize: Sequelize) {
             timestamps: false,
             freezeTableName: true,
             underscored: true,
-            modelName: 'user',
+            modelName: 'User',
             tableName: 'users',
             hooks: {
                 beforeCreate: async (user: User) => {
