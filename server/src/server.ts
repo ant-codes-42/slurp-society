@@ -7,13 +7,17 @@ import routes from './routes/index.js'; // imports routes to handles HTTP reques
 import { TimeSlotService } from './services/timeSlotService.js'; // imports service to handle time slot generation
 import { createTimeSlotRouter } from './routes/api/time-slot-routes.js'; // imports router to handle time slot generation and availability requests
 
+
+
 const app = express(); // creates instance of express app
 const PORT = process.env.PORT || 3001; // opens server on port 3001
 
 app.use(express.static('../client/dist')); // serves static files
 
+
 app.use(express.json()); // parses JSON request bodies
 app.use(routes); // handles API requests
+
 
 sequelize.sync({ force: forceDatabaseRefresh }).then(() => { //synqs sequelize models with database. creates tables if the dont exist 
     app.listen(PORT, () => { // starts server on port

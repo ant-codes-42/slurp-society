@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import { User } from '../models/index.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import {sendVerificationEmail} from '../services/emailService.js';
+import { sendVerificationEmail } from '../services/emailService.js';
 
 export const login = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -39,23 +39,23 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         );
 
         res.json({ token });
-        return; 
+        return;
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ message: 'Server error' });
-        return; 
+        return;
     }
 };
 
-export const register = async (req: Request, res: Response): Promise <void> => {
+export const register = async (req: Request, res: Response): Promise<void> => {
     try {
-        const {email, password, phone, name } = req.body;
+        const { email, password, phone, name } = req.body;
 
         //check if the user already exists 
-        const existingUser = await User.findOne ({where: {email} });
+        const existingUser = await User.findOne({ where: { email } });
 
-        if(existingUser) {
-            res.status(400).json({ message: 'User already exists'});
+        if (existingUser) {
+            res.status(400).json({ message: 'User already exists' });
             return;
         }
 
@@ -65,23 +65,23 @@ export const register = async (req: Request, res: Response): Promise <void> => {
         //create a new user (via their email)
         const newUser = await User.create({
             email,
-            phone, 
+            phone,
             name,
             password
         });
 
-        console.log(`New user created: ${newUser.email}`); 
+        console.log(`New user created: ${newUser.email}`);
 
         //sends verification email from emailService to users email
         await sendVerificationEmail(email);
 
-        res.status(201).json({message: 'Registration succesful.  Welcome email sent!'});
+        res.status(201).json({ message: 'Registration succesful.  Welcome email sent!' });
 
         return;
 
     } catch (err) {
         console.error('Registration error:', err);
-        res.status(500).json({message: 'Server error'});
+        res.status(500).json({ message: 'Server error' });
         return;
     }
 

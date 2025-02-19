@@ -67,9 +67,6 @@ export function UserFactory(sequelize: Sequelize) {
                 beforeCreate: async (user: User) => {
                     await user.setPassword(user.password);
                 },
-                beforeUpdate: async (user: User) => {
-                    await user.setPassword(user.password);
-                }
             }
         }
     );

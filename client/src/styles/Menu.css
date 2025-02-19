@@ -1,0 +1,17 @@
+.menu-container {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+    background-blend-mode: multiply;
+    size:inherit;
+    margin-top: 50px;
+    
+}
+
+.menu-list {
+    list-style: none;
+}
+
+h2 {
+    text-decoration: underline;
+    display: inline-block;
+}
