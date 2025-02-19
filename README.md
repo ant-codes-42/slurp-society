@@ -44,7 +44,7 @@ The user can select a reservation.
 ![ReservationExample](./assets/images/ReservationExample.png)
 
 The user gets confirmation on the website that their reservation has been successful.
-(insert image)
+![ConfirmMessage](./assets/images/Confirm.png)
 
 ## Credits
 
