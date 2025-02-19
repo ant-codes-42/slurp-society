@@ -1,0 +1,25 @@
+.contact-container {
+    border: black 3px solid;
+    border-radius: 25px;
+    margin-top: 35px;
+    background-image: url('./src/assets/images/ramen-cat.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-color: antiquewhite;
+    background-blend-mode: multiply;
+    background-size: 250px;
+    background-position: top left;
+}
+
+.contact-list {
+    list-style: none;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.contactA {
+    text-decoration: none;
+}
+
+.contact-title {
+    text-decoration: none;
+}
