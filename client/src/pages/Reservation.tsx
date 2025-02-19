@@ -4,6 +4,8 @@ import { formatDate } from '../utils/dateUtils.js';
 import { getAvailableTimeslots } from '../api/timeslotAPI';
 import { Value } from 'react-calendar/dist/cjs/shared/types.js';
 import { useNavigate } from 'react-router';
+import 'react-calendar/dist/Calendar.css'
+import '../styles/Reservation.css'
 
 const Reservation = () => {
     const [calendarDate, setCalendarDate] = useState<Value>(null);
@@ -42,21 +44,23 @@ const Reservation = () => {
     }
 
     return (
-        <div>
-            <div>
+        <div className='react-calendar'>
+            <div >
                 <Calendar
                     onChange={handleDateChange}
                     value={calendarDate}
                     minDate={new Date()}
                 />
             </div>
-            <label>Party Size:</label>
+            <div className='partyDiv'>
+            <label className='resLabel'>Party Size:</label>
             <input
                 type="number"
                 value={partySize}
                 min={2}
                 onChange={(e) => setPartySize(Number(e.target.value))}
             />
+            </div>
             <div className='timeslots'>
                 {timeslots ? (
                     <ul>
