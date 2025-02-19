@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router'; 
-
+import  '../styles/NavBar.css'
 import auth from '../utils/Auth';
 
 const Navbar = () => {
@@ -13,9 +13,8 @@ const Navbar = () => {
 
   return (
     <nav className='nav'>
-      <div className='nav-title'>
-        <Link to='/'>Home Page</Link>
-      </div>
+  
+      <div className='nav-div'>
       <ul className='nav-links'>
         <li className='nav-item'>
           <Link to='/' className='a-link'> Home Page</Link>
@@ -33,12 +32,14 @@ const Navbar = () => {
         <li className='nav-item'>
           {!loginCheck ? (
             <>
+            <div className='loginReg'>
               <li className='nav-item'>
-                <Link to='/login'>Login</Link> 
+                <Link to='/login' className='a-link'>Login</Link> 
               </li>
               <li className='nav-item'>
-                <Link to='/register'>Register</Link> 
+                <Link to='/register' className='a-link'>Register</Link> 
               </li>
+              </div>
             </>
           ) : (
             <li className='nav-item'>
@@ -55,6 +56,7 @@ const Navbar = () => {
           )}
         </li>
       </ul>
+      </div>
     </nav>
   );
 };
