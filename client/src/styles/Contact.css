@@ -2,7 +2,7 @@
     border: black 3px solid;
     border-radius: 25px;
     margin-top: 35px;
-    background-image: url('./src/assets/images/ramen-cat.jpg');
+    background-image: url('/images/ramen-cat.jpg');
     background-repeat: no-repeat, no-repeat;
     background-color: antiquewhite;
     background-blend-mode: multiply;
