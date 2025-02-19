@@ -10,7 +10,9 @@ const Login = () => {
     password: '',
   });
 
-  
+  // hook state to set error message 
+  const [error, setError] = useState<string | null>(null);
+
   //function to handle changes within the input fields 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -31,6 +33,7 @@ const Login = () => {
       Auth.login(data.token);
     } catch (err) {
       console.error('Failed to login', err);
+      setError("Please register your email or type your password correctly.");
     }
   };
 
@@ -54,6 +57,7 @@ const Login = () => {
           onChange={handleChange}
         />
         <button type='submit'>Submit</button>
+        {error && <p className="error-message">{error}</p>}
       </form>
     </div>
     
