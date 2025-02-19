@@ -31,7 +31,7 @@ If the user wishes to make a reservation they must log in.
 ![Login](./assets/images/LoginInterface.png)
 
 The user recieves a confirmation email that they have been successfully registered.
-![ConfirmEmail](./assets/images/ConfirmationEmail.png)
+
 
 If the user doesn't have an account they must make an account to log in.
 (insert image)
