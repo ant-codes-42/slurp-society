@@ -5,6 +5,7 @@ import { createReservation } from '../api/reservationAPI';
 import { updateUser } from '../api/userAPI';
 import { useNavigate } from 'react-router';
 import auth from '../utils/Auth';
+import '../styles/ReservationForm.css';
 
 export default function ReservationForm({ slot, incomingPartySize }: { slot: string, incomingPartySize: string }) {
     const [userObj, setUserObj] = useState<UserData>({
@@ -123,23 +124,23 @@ export default function ReservationForm({ slot, incomingPartySize }: { slot: str
                     <h1>Login to make a reservation</h1>
                 </div>
             ) : (
-                <div>
+                <div className='reserveDiv2'>
                     <h1>Reservation Form</h1>
                     <form onSubmit={handleFormSubmit}>
-                        <div>
-                            <label htmlFor="name">Name</label>
-                            <input type="text" value={userObj.name ? userObj.name : ''} onChange={handleInputChange} id="name" name="name" />
-                            <label htmlFor="email">Email</label>
-                            <input type="email" value={userObj.email ? userObj.email : ''} onChange={handleInputChange} id="email" name="email" />
-                            <label htmlFor="phone">Phone</label>
-                            <input type="phone" value={userObj.phone ? userObj.phone : ''} onChange={handleInputChange} id="phone" name="phone" />
-                            <label htmlFor="specialRequests">Special Requests</label>
+                        <div className='reserveDiv'>
+                            <label className='label' htmlFor="name">Name</label>
+                            <input className='input' type="text" value={userObj.name ? userObj.name : ''} onChange={handleInputChange} id="name" name="name" />
+                            <label className="label" htmlFor="email">Email</label>
+                            <input className='input' type="email" value={userObj.email ? userObj.email : ''} onChange={handleInputChange} id="email" name="email" />
+                            <label className='label' htmlFor="phone">Phone</label>
+                            <input className='input' type="phone" value={userObj.phone ? userObj.phone : ''} onChange={handleInputChange} id="phone" name="phone" />
+                            <label className='label' htmlFor="specialRequests">Special Requests</label>
                             <textarea value={specialRequests} onChange={handleInputChange} id="specialRequests" name="specialRequests" />
-                            <label htmlFor="partySize">Party Size</label>
-                            <input type="number" value={incomingPartySize} onChange={handleInputChange} id="partySize" name="partySize" />
+                            <label className='label' htmlFor="partySize">Party Size</label>
+                            <input className='input' type="number" value={incomingPartySize} onChange={handleInputChange} id="partySize" name="partySize" />
                         </div>
                         <div>
-                            <input type="submit" value="Submit" />
+                            <input className='button' type="submit" value="Submit" />
                         </div>
                     </form>
                 </div>

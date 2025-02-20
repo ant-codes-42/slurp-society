@@ -6,7 +6,7 @@
     margin-top: 50px;
     flex-direction: column;
     align-items: center;
-    background-image:   url(./src/assets/images/ramen-bowl.jpg), url(./src/assets/images/cherry-blossom.jpg);
+    background-image:   url("/images/ramen-bowl.jpg"), url("/images/cherry-blossom.jpg");
     background-size: 250px, 300px;
     background-position:left top, bottom right;
     background-repeat: no-repeat, no-repeat;
